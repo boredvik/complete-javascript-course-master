@@ -159,7 +159,7 @@ const maxAverageWeight = Math.max(
     .filter(dog => dog.activities.includes('fetch'))
     .map(breed => breed.averageWeight)
 );
-console.log(maxAverageWeight);
+// console.log(maxAverageWeight);
 
 ///////////////////////////////////////
 // Coding Challenge #5
