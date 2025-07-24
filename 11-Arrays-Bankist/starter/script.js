@@ -244,6 +244,56 @@ btnSort.addEventListener('click', function (e) {
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
+// 1.
+// const bankDepositSum = accounts
+//   .flatMap(account => account.movements)
+//   .reduce((acc, mov) => acc + mov, 0);
+// console.log(bankDepositSum);
+
+// 2.
+
+// const countDeposit = accounts
+//   .flatMap(account => account.movements)
+//   .reduce((acc, mov) => (mov >= 1000 ? ++acc : acc), 0);
+// console.log(countDeposit);
+
+// 3.
+
+// const { deposit, withdrawal } = accounts
+//   .flatMap(account => account.movements)
+//   .reduce(
+//     (acc, mov) => {
+// deposit,withdrawal(acc.deposit += mov) : (acc.withdrawal += mov);
+//     acc[mov > 0 ? 'deposit' : 'withdrawal'] += mov;
+//     return acc;
+//   },
+//   { deposit: 0, withdrawal: 0 }
+// );
+// console.log(deposit, withdrawal);
+
+// 4.
+
+//this is a nice title -> This is a Nice Title
+
+const titleCase = function (str) {
+  const capitiallizeFirstLetter = str => str[0].toUpperCase() + str.slice(1);
+  const exceptions = ['is', 'a', 'an', 'for', 'but', 'with', 'on', 'in', 'the'];
+
+  const words = str
+    .toLowerCase()
+    .split(' ')
+    .map(word =>
+      exceptions.includes(word) ? word : capitiallizeFirstLetter(word)
+    )
+    .join(' ');
+
+  return capitiallizeFirstLetter(words);
+};
+
+console.log(titleCase('this is a nice title'));
+console.log(titleCase('this is a NICE long tITLe'));
+console.log(titleCase('is this another title with EXAMPLE'));
+
 // console.log(owners.sort());
 // console.log(owners);
 

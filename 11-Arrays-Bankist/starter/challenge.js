@@ -167,7 +167,8 @@ const maxAverageWeight = Math.max(
 /* 
 Julia and Kate are still studying dogs. This time they are want to figure out if the dogs in their are eating too much or too little food.
 
-- Formula for calculating recommended food portion: recommendedFood = weight ** 0.75 * 28. (The result is in grams of food, and the weight needs to be in kg)
+- Formula for calculating recommended food portion: recommendedFood = weight ** 0.75 * 28. (The result is in grams of food, 
+and the weight needs to be in kg)
 - Eating too much means the dog's current food portion is larger than the recommended portion, and eating too little is the opposite.
 - Eating an okay amount means the dog's current food portion is within a range 10% above and below the recommended portion (see hint).
 
@@ -184,7 +185,9 @@ YOUR TASKS:
 10. Sort the dogs array by recommended food portion in an ascending order. Make sure to NOT mutate the original array!
 
 HINT 1: Use many different tools to solve these challenges, you can use the summary lecture to choose between them 😉
-HINT 2: Being within a range 10% above and below the recommended portion means: current > (recommended * 0.90) && current < (recommended * 1.10). Basically, the current portion should be between 90% and 110% of the recommended portion.
+HINT 2: Being within a range 10% above and below the recommended portion means: 
+current > (recommended * 0.90) && current < (recommended * 1.10). 
+Basically, the current portion should be between 90% and 110% of the recommended portion.
 
 TEST DATA:
 const dogs = [
@@ -197,3 +200,91 @@ const dogs = [
 
 GOOD LUCK 😀
 */
+
+const dogs = [
+  { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
+  { weight: 8, curFood: 200, owners: ['Matilda'] },
+  { weight: 13, curFood: 275, owners: ['Sarah', 'John', 'Leo'] },
+  { weight: 18, curFood: 244, owners: ['Joe'] },
+  { weight: 32, curFood: 340, owners: ['Michael'] },
+];
+
+/*
+- Eating too much means the dog's current food portion is larger than the recommended portion, and eating too little is the opposite.
+- Eating an okay amount means the dog's current food portion is within a range 10% above and below the recommended portion (see hint).
+*/
+
+//1.
+dogs.forEach(dog => (dog.recFood = Math.floor(dog.weight ** 0.75 * 28)));
+// console.log(dogs);
+
+//2.
+const dogSarah = dogs.find(dog => dog.owners.includes('Sarah'));
+
+const weightCalc = function (dog, more, less) {
+  const result = dog.curFood > dog.recFood ? more : less;
+  return result;
+};
+// console.log(weightCalc(dogSarah, 'TooMuch', 'TooLittle'));
+
+//3.
+const { ownersTooMuch, ownersTooLittle } = dogs.reduce(
+  (acc, dog) => {
+    acc[weightCalc(dog, 'ownersTooMuch', 'ownersTooLittle')].push(dog.owners);
+    return acc;
+  },
+  { ownersTooMuch: [], ownersTooLittle: [] }
+);
+// console.log(ownersTooMuch, ownersTooLittle);
+
+// 4.
+// console.log(
+//   ownersTooMuch
+//     .flatMap(owner => owner)
+//     .join(' and ')
+//     .concat("'s dogs eat too much!")
+// );
+// console.log(
+//   ownersTooLittle
+//     .flatMap(owner => owner)
+//     .join(' and ')
+//     .concat("'s dogs eat too little!")
+// );
+// );
+
+// 5.
+// console.log(dogs.some(dog => dog.curFood === dog.recFood));
+
+// 6.
+// console.log(
+//   dogs.every(
+//     dog => dog.curFood > 0.9 * dog.recFood && dog.curFood < 1.1 * dog.recFood
+//   )
+// );
+
+// 7.
+const okayDogs = dogs.filter(
+  dog => dog.curFood > 0.9 * dog.recFood && dog.curFood < 1.1 * dog.recFood
+);
+// console.log(okayDogs);
+
+//8.
+const result = Object.groupBy(dogs, dog => {
+  if (dog.curFood > dog.recFood) {
+    return 'too-much';
+  } else if (dog.curFood < dog.recFood) {
+    return 'too-little';
+  } else {
+    return 'exact';
+  }
+});
+// console.log(result);
+
+//9. Group the dogs by the number of owners they have
+
+const resultOwner = Object.groupBy(dogs, dog => `${dog.owners.length}-owners`);
+// console.log(resultOwner);
+//10. Sort the dogs array by recommended food portion in an ascending order. Make sure to NOT mutate the original array!
+
+// console.log(dogs);
+console.log(dogs.toSorted((a, b) => a.recFood - b.recFood));
