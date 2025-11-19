@@ -44,7 +44,32 @@ const allSelection = document.querySelectorAll('.section');
 console.log(allSelection);
 
 document.getElementById('section--1');
-const allButtons = document.getElementsByTagName('.button');
+// const allButtons = document.getElementsByTagName('.button');
 console.log(allButtons);
 
 console.log(document.getElementsByClassName('btn'));
+
+// console.log(document.documentElement);
+// console.log(document.head);
+// console.log(document.body);
+
+const allSections = document.querySelectorAll('.section');
+// console.log(allSections);
+
+document.getElementById('section--1');
+
+const allButtons = document.getElementsByTagName('button');
+// console.log(allButtons);
+// console.log(document.getElementsByClassName('btn'));
+
+//Creating and inserting elements
+// Insert Adjacent HTML fxn (used before in bankist application)
+//.insertAdjacentHTML()
+
+//other ways for creating elements
+
+const message = document.createElement('div');
+message.classList.add('cookie-message');
+// message.textContent = 'We use cookies for improved functionality and analytics. ';
+message.innerHTML =
+  'We use cookies for improved functionality and analytics. <button class = "btn btn--close-cookie">Got it!</button>';
